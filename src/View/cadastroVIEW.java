@@ -2,6 +2,7 @@ package View;
 
 import DTO.ProdutosDTO;
 import DAO.ProdutosDAO;
+import javax.swing.JOptionPane;
 import java.awt.event.KeyEvent;
 
 public class cadastroVIEW extends javax.swing.JFrame {
@@ -140,12 +141,19 @@ public class cadastroVIEW extends javax.swing.JFrame {
         String valor = txt_valor.getText();
         String status = "A Venda";
 
-        produto.setNome(nome);
-        produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
-
-        ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
+        try {
+            produto.setNome(nome);
+            produto.setValor(Integer.parseInt(valor));
+            produto.setStatus(status);
+            
+            ProdutosDAO produtodao = new ProdutosDAO();
+            produtodao.cadastrarProduto(produto);
+         
+            txt_nome.setText("");
+            txt_valor.setText("");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao coletar dados do campo de texto");
+        }
     }//GEN-LAST:event_btn_cadastrarActionPerformed
 
     private void btn_produtosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_produtosActionPerformed
@@ -160,7 +168,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_valorKeyReleased
 
     private void txt_nomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nomeKeyReleased
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txt_valor.requestFocus();
         }
     }//GEN-LAST:event_txt_nomeKeyReleased

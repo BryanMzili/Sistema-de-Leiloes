@@ -28,7 +28,7 @@ public class ProdutosDAO {
             psmt.execute();
             
         } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, erro.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao cadastrar Produtos");
         } finally {
             try {
                 psmt.close();

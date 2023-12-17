@@ -9,7 +9,8 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     public listagemVIEW() {
         initComponents();
-        listarProdutos();
+        //listarProdutos();
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -27,7 +28,14 @@ public class listagemVIEW extends javax.swing.JFrame {
         btnVendas = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Listagem e venda de produtos");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         listaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,12 +130,12 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+        /*String id = id_produto_venda.getText();
 
         ProdutosDAO produtosdao = new ProdutosDAO();
 
         //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        listarProdutos();*/
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -136,8 +144,14 @@ public class listagemVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
-        this.dispose();
+        dispose();
+        new cadastroVIEW().setVisible(true);
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        dispose();
+        new cadastroVIEW().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

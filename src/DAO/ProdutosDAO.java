@@ -67,7 +67,7 @@ public class ProdutosDAO {
     }
 
     public ArrayList<ProdutosDTO> listarProdutosVendidos() {
-        sql = "select id, nome, valor, status from produtos where status='Vendido';";
+        sql = "select id, nome, valor from produtos where status='Vendido';";
         return baseListagem(sql);
     }
 

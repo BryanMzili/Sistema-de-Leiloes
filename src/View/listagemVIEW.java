@@ -14,7 +14,6 @@ public class listagemVIEW extends javax.swing.JFrame {
     public listagemVIEW() {
         listagem = produtosdao.listarProdutos();
         initComponents();
-
         listarProdutos();
         setLocationRelativeTo(null);
     }
@@ -157,8 +156,6 @@ public class listagemVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
         dispose();
         new vendasVIEW().setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed

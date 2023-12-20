@@ -13,7 +13,6 @@ public class vendasVIEW extends javax.swing.JFrame {
     public vendasVIEW() {
         listagem = produtosdao.listarProdutosVendidos();
         initComponents();
-
         listarProdutos();
         setLocationRelativeTo(null);
     }
@@ -29,7 +28,7 @@ public class vendasVIEW extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Listagem e venda de produtos");
+        setTitle("Listagem de produtos vendidos");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

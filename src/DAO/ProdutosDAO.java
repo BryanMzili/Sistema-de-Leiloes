@@ -40,8 +40,38 @@ public class ProdutosDAO {
         }
     }
 
+    public void venderProduto(int id) {
+        sql = "update produtos set status='Vendido' where id = ?;";
+        conn = new conectaDAO().connectDB();
+
+        try {
+            psmt = conn.prepareStatement(sql);
+            psmt.setInt(1, id);
+            psmt.execute();
+
+            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso.");
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Falha ao vender produto.");
+        } finally {
+            try {
+                conn.close();
+                psmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+    }
+
     public ArrayList<ProdutosDTO> listarProdutos() {
         sql = "select id, nome, valor, status from produtos;";
+        return baseListagem(sql);
+    }
+
+    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
+        sql = "select id, nome, valor, status from produtos where status='Vendido';";
+        return baseListagem(sql);
+    }
+
+    private ArrayList<ProdutosDTO> baseListagem(String sql) {
         conn = new conectaDAO().connectDB();
 
         try {
@@ -54,8 +84,11 @@ public class ProdutosDAO {
                 produto.setId(rs.getInt("id"));
                 produto.setNome(rs.getString("nome"));
                 produto.setValor(rs.getInt("valor"));
-                produto.setStatus(rs.getString("status"));
-
+                if (sql.length() > 50) {
+                    produto.setStatus("Vendido");
+                } else {
+                    produto.setStatus(rs.getString("status"));
+                }
                 listagem.add(produto);
             }
         } catch (SQLException erro) {
@@ -70,26 +103,5 @@ public class ProdutosDAO {
         }
         return listagem;
     }
-    
-    public void venderProduto(int id){
-        sql = "update produtos set status='Vendido' where id = ?;";
-        conn = new conectaDAO().connectDB();
-
-        try {
-            psmt = conn.prepareStatement(sql);
-            psmt.setInt(1, id);
-            psmt.execute();
-            
-            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso.");
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "Falha ao vender produto.");
-        } finally {
-            try {
-                conn.close();
-                psmt.close();
-            } catch (SQLException ex) {
-            }
-        }
-    } 
 
 }

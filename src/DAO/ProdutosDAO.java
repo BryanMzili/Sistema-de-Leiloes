@@ -38,7 +38,6 @@ public class ProdutosDAO {
             } catch (SQLException e) {
             }
         }
-
     }
 
     public ArrayList<ProdutosDTO> listarProdutos() {
@@ -59,7 +58,6 @@ public class ProdutosDAO {
 
                 listagem.add(produto);
             }
-
         } catch (SQLException erro) {
             return null;
         } finally {
@@ -70,8 +68,28 @@ public class ProdutosDAO {
             } catch (SQLException ex) {
             }
         }
-
         return listagem;
     }
+    
+    public void venderProduto(int id){
+        sql = "update produtos set status='Vendido' where id = ?;";
+        conn = new conectaDAO().connectDB();
+
+        try {
+            psmt = conn.prepareStatement(sql);
+            psmt.setInt(1, id);
+            psmt.execute();
+            
+            JOptionPane.showMessageDialog(null, "Produto vendido com sucesso.");
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Falha ao vender produto.");
+        } finally {
+            try {
+                conn.close();
+                psmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+    } 
 
 }

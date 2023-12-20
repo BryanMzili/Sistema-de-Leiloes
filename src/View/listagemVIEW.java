@@ -3,12 +3,18 @@ package View;
 import DTO.ProdutosDTO;
 import DAO.ProdutosDAO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class listagemVIEW extends javax.swing.JFrame {
 
+    private ArrayList<ProdutosDTO> listagem;
+    private ProdutosDAO produtosdao = new ProdutosDAO();
+
     public listagemVIEW() {
+        listagem = produtosdao.listarProdutos();
         initComponents();
+
         listarProdutos();
         setLocationRelativeTo(null);
     }
@@ -130,12 +136,24 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        /*String id = id_produto_venda.getText();
+        int id = convertInt(id_produto_venda.getText());
+        ArrayList<Integer> ids = new ArrayList();
 
-        ProdutosDAO produtosdao = new ProdutosDAO();
+        for (ProdutosDTO produto : listagem) {
+            ids.add(produto.getId());
+        }
 
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();*/
+        if (ids.contains(id)) {
+            if (produtoVendido(id)) {
+                JOptionPane.showMessageDialog(null, "Produto já havia sido vendido antes.");
+            } else {
+                produtosdao.venderProduto(id);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+        }
+
+        listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -169,12 +187,8 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void listarProdutos() {
         try {
-            ProdutosDAO produtosdao = new ProdutosDAO();
-
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
-
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
 
             for (int i = 0; i < listagem.size(); i++) {
                 model.addRow(new Object[]{
@@ -186,6 +200,29 @@ public class listagemVIEW extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
+    }
 
+    private boolean produtoVendido(int id) {
+        for (ProdutosDTO produto : listagem) {
+            if (produto.getId() == id) {
+                if (produto.getStatus().equals("Vendido")) {
+                    return true;
+                } else {
+                    produto.setStatus("Vendido");
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    
+    private int convertInt(String number) {
+        try {
+            int id = Integer.parseInt(number);
+            return id;
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 }
